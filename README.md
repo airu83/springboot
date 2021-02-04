@@ -1,6 +1,6 @@
 # springboot
 
-* 2021-02-04
+* 2021-02-04(1차)
 
 - Gradle build
 https://docs.gradle.org/current/userguide/intro_multi_project_builds.html#sec:multiproject_build_and_test
@@ -187,3 +187,22 @@ public class ClientApplication {
 - application.yml
 server:
   port: 9000
+
+
+* 2021-02-04(2차)
+
+1. build.gradle (module_admin && module_client)
+ developmentOnly("org.springframework.boot:spring-boot-devtools")
+ 
+2. CommonController( module_admin && module_client -> controller(package) -> CommonController.java )
+	@GetMapping("")
+	public String index() {
+		System.out.println(">>>Call Admin index");
+		return "Hello this is Admin Controller~!";
+	}
+
+	@GetMapping("")
+	public String index() {
+		System.out.println(">>>Call Client Index");
+		return "Hello this is Client Controller~!!";
+	}
