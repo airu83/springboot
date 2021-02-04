@@ -1,0 +1,3 @@
+rootProject.name = 'springboot_gradle_multi'
+
+include 'module_admin', 'module_core', 'module_client'
