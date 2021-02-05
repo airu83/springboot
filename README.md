@@ -1,6 +1,8 @@
-# springboot
+### springboot
 
-* 2021-02-04(1차)
+## 2021-02-04(1차)
+
+# multi project 구성
 
 - Gradle build
 https://docs.gradle.org/current/userguide/intro_multi_project_builds.html#sec:multiproject_build_and_test
@@ -189,7 +191,9 @@ server:
   port: 9000
 
 
-* 2021-02-04(2차)
+## 2021-02-04(2차)
+
+# devtool 적용
 
 1. build.gradle (module_admin && module_client)
  developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -206,3 +210,82 @@ server:
 		System.out.println(">>>Call Client Index");
 		return "Hello this is Client Controller~!!";
 	}
+
+
+## 2021-02-05
+
+# Thymeleaf 엔전 적용
+
+1. build.gradle (module_admin && module_client)
+     implementation ('org.springframework.boot:spring-boot-starter-thymeleaf') 추가 후 Gradle Refreash
+
+2. ViewController 생성 (module_admin && module_client)
+@Controller
+public class ViewController {
+    
+    @GetMapping("/adminindex")
+    public String greeting(@RequestParam(name="name", required=false, defaultValue="world") String name, Model model) {
+        System.out.println(">>>admin ViewController");
+        model.addAttribute("name", name);
+        return "greeting";
+    }
+}
+
+3. greeting.html 생성 (module_admin && module_client)
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Admin Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="'Hello, admin ' + ${name} + '!'" />
+</body>
+</html>
+
+
+# Spring Security 1차
+
+1. build.gradle
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+
+2. WebConfig.java
+@Configuration
+@EnableWebSecurity
+public class WebConfig extends WebSecurityConfigurerAdapter{
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+                .antMatchers("/",  "/home").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll();
+    }
+    
+    
+    // The userDetailsService() method sets up an in-memory user store with a single user.
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        UserDetails user =
+             User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
+}
+
+3. login, hello, home.html
+
+

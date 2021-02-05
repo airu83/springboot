@@ -63,6 +63,16 @@ subprojects {
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
+            
+ 	implementation ('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    
+    implementation ('org.springframework.boot:spring-boot-starter-thymeleaf')
+              
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
     }
 
     task initSourceFolders {
