@@ -1,4 +1,14 @@
 dependencies {
 
+//	implementation ('org.springframework.boot:spring-boot-starter-data-jpa')
+	// mysql
+	runtimeOnly ('mysql:mysql-connector-java')
+	// jdbc
+	implementation ('org.springframework.boot:spring-boot-starter-jdbc')
+	// mybatis - Mapper 사용, 버전문제로 해매었음 왜 버전 지정이 안되면 어노테이션을 못쓰지?
+	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1")
+	
+	//implementation project(':module_core')
+	
     
 }
